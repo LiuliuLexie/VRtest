@@ -12,7 +12,7 @@ public class WindChimeBackpack1 : MonoBehaviour
             if (slot.childCount > 0)
             {
                 Transform chime = slot.GetChild(0);
-                WindChimeData1 data = chime.GetComponent<WindChimeData1>();
+                WindChimeData1 data = chime.GetComponentInChildren<WindChimeData1>();
                 if (data != null && data.melodyID == melodyID)
                 {
                     return chime.gameObject;

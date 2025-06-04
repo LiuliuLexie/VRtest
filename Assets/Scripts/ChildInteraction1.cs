@@ -74,4 +74,9 @@ public class ChildInteraction1 : MonoBehaviour
         chime.transform.position = end;
         chime.transform.SetParent(this.transform);
     }
+
+    void OnGazeEnter()
+    {
+        GazeRaycaster1.instance.gazeText.text = "Can you ...hear me?";
+    }
 }

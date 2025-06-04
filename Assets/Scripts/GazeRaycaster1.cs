@@ -10,13 +10,14 @@ public class GazeRaycaster1 : MonoBehaviour
     public TextMeshProUGUI gazeText;
     public Transform cameraTransform;
 
+    public static GazeRaycaster1 instance;
+
     void Start()
     {
+        instance = this;
+        
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
-
-        if (gazeText != null)
-            gazeText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -38,30 +39,15 @@ public class GazeRaycaster1 : MonoBehaviour
                     gazeTimer = 0f;
                 }
 
-                gazeTimer += Time.deltaTime;
-
-                // Check if it's a child or wind chime
-                if (gazeText != null)
+                if (gazeTimer >= 0)
                 {
-                    if (hitObj.GetComponent<ChildInteraction1>() != null)
-                    {
-                        gazeText.text = "Can you ...hear me?";
-                        Debug.Log("triggered gaze child");
-                    }
-                    else
-                    {
-                        gazeText.text = "Collecting...";
-                        Debug.Log("triggered gaze wind chime");
-                    }
-
-                    gazeText.gameObject.SetActive(true);
+                    gazeTimer += Time.deltaTime;
                 }
 
                 if (gazeTimer >= gazeTime)
                 {
                     gazedAtObject.SendMessage("OnGazeTrigger", SendMessageOptions.DontRequireReceiver);
-                    gazeTimer = 0f;
-                    gazeText.gameObject.SetActive(false);
+                    gazeTimer = -1f;
                 }
             }
             else
@@ -82,7 +68,7 @@ public class GazeRaycaster1 : MonoBehaviour
             gazedAtObject.SendMessage("OnGazeExit", SendMessageOptions.DontRequireReceiver);
 
         gazeTimer = 0f;
-        gazeText?.gameObject.SetActive(false);
+        gazeText.text = "";
         gazedAtObject = null;
     }
 }

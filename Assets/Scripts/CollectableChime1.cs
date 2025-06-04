@@ -4,7 +4,7 @@ using UnityEngine;
 public class CollectableChime1 : MonoBehaviour
 {
     [Header("Attachment Settings")]
-    public Transform attachPoint; 
+    public Transform attachPoint;
     public float moveDuration = 2f;
 
     [Header("Visibility & Sound Control")]
@@ -16,7 +16,7 @@ public class CollectableChime1 : MonoBehaviour
     private bool isCollected = false;
 
     [Header("Backpack Reference")]
-    public WindChimeBackpack1 backpack; 
+    public WindChimeBackpack1 backpack;
 
     // [Header("Wind Chime Prefab (For Backpack Display)")]
     // public GameObject windChimePrefab; 
@@ -67,7 +67,24 @@ public class CollectableChime1 : MonoBehaviour
         transform.parent.transform.position = target;
         transform.parent.SetParent(attachPoint); // 确保挂点正确
 
-        yield return new WaitForSeconds(0.2f); 
+        yield return new WaitForSeconds(0.2f);
 
+    }
+
+    void OnGazeEnter()
+    {
+        if (!isCollected)
+        {
+            GazeRaycaster1.instance.gazeText.text = "Collecting...";
+        }
+    }
+
+    void OnGazeTrigger()
+    {
+        if (!isCollected)
+        {
+            // Collect();
+            GazeRaycaster1.instance.gazeText.text = "";
+        }
     }
 }

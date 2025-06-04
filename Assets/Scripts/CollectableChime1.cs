@@ -51,10 +51,10 @@ public class CollectableChime1 : MonoBehaviour
     {
         float time = 0f;
         Vector3 start = transform.parent.transform.position;
-        Debug.Log("Start position: " + start);
-        Debug.Log("Parent name: " + transform.parent.name); 
+        // Debug.Log("Start position: " + start);
+        // Debug.Log("Parent name: " + transform.parent.name); 
         Vector3 target = attachPoint != null ? attachPoint.position : (start + Vector3.up * 0.5f);
-        Debug.Log("Target position: " + target);
+        // Debug.Log("Target position: " + target);
 
 
         while (time < moveDuration)

@@ -5,53 +5,47 @@ public class ChildInteraction1 : MonoBehaviour
 {
     [Header("Matching Logic")]
     public int requiredMelodyID;
+    public WindChimeBackpack1 backpack;
 
-    [Header("Gaze Text UI")]
+    [Header("Gaze UI")]
     public TextMeshProUGUI gazeText;
 
-    [Header("Dialogue Content")]
-    public string gazeLine = "Can you... hear me?";
-    public string correctResponse = "Thank you. I remembered... just a little. As thanks, best wishes for you.";
-    public string wrongResponse = "This is... my sound?";
+    [Header("Texts")]
+    public string successText = "Thank you. I remembered... just a little.";
+    public string failureText = "This is... my sound? I don't think so.";
 
-    private bool hasTriggered = false;
+    private bool hasReceivedChime = false;
 
     public void TriggerDialogue()
     {
-        if (hasTriggered) return;
-        hasTriggered = true;
+        if (hasReceivedChime) return;
 
-        if (gazeText != null)
+        GameObject matchingChime = backpack.FindAttachedChime(requiredMelodyID);
+        Debug.Log($"Looking for chime with melody ID: {requiredMelodyID}");
+
+        if (matchingChime != null)
         {
-            gazeText.text = gazeLine;
-            gazeText.gameObject.SetActive(true);
-            Invoke(nameof(HideText), 2f); 
-        }
+            Debug.Log("Found matching chime: " + matchingChime.name);
+            hasReceivedChime = true;
 
-        Debug.Log("Triggered child dialogue: " + gazeLine);
+            StartCoroutine(MoveChimeToChild(matchingChime));
 
-        MatchManager1.Instance.ReadyToMatch(this);
-    }
-
-    public void RespondToChime(int givenMelodyID)
-    {
-        if (givenMelodyID == requiredMelodyID)
-        {
-            if (gazeText != null)
-            {
-                gazeText.text = correctResponse;
-                gazeText.gameObject.SetActive(true);
-            }
-            MatchManager1.Instance.RegisterMatch(this, true);
+            ShowText(successText);
         }
         else
         {
-            if (gazeText != null)
-            {
-                gazeText.text = wrongResponse;
-                gazeText.gameObject.SetActive(true);
-            }
-            MatchManager1.Instance.RegisterMatch(this, false);
+            Debug.Log("No matching chime found.");
+            ShowText(failureText);
+        }
+    }
+
+    private void ShowText(string message)
+    {
+        if (gazeText != null)
+        {
+            gazeText.text = message;
+            gazeText.gameObject.SetActive(true);
+            Invoke(nameof(HideText), 2f);
         }
     }
 
@@ -61,5 +55,23 @@ public class ChildInteraction1 : MonoBehaviour
         {
             gazeText.gameObject.SetActive(false);
         }
+    }
+
+    private System.Collections.IEnumerator MoveChimeToChild(GameObject chime)
+    {
+        float duration = 1.5f;
+        float time = 0f;
+        Vector3 start = chime.transform.position;
+        Vector3 end = transform.position + Vector3.up * 0.3f; // 偏上位置，避免穿模
+
+        while (time < duration)
+        {
+            chime.transform.position = Vector3.Lerp(start, end, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        chime.transform.position = end;
+        chime.transform.SetParent(this.transform);
     }
 }

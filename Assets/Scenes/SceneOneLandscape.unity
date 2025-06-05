@@ -2319,11 +2319,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 441087507}
   lookAngleThreshold: 10
-  maxSpeed: 2
-  acceleration: 1.5
-  decelerationSmoothTime: 0.5
-  yawThreshold: 145
-  yawTurnRate: 10
+  speed: 2
+  moveForward: 0
+  smoothTime: 0.3
 --- !u!1001 &530598453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7553,7 +7551,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750636804}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091b7c1e08e1d48bda67568459af6669, type: 3}
   m_Name: 
@@ -7585,18 +7583,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750636804}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 614efe84beaf9452dbb0c11fdf18b8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 441087507}
   lookAngleThreshold: 10
-  maxSpeed: 2
-  acceleration: 1.5
-  decelerationSmoothTime: 0.5
-  yawThreshold: 145
-  yawTurnRate: 10
+  speed: 1.5
+  moveForward: 0
+  smoothTime: 0.3
 --- !u!1001 &1785685568
 PrefabInstance:
   m_ObjectHideFlags: 0

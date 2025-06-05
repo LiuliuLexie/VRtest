@@ -3,22 +3,18 @@ using UnityEngine;
 public class VRPlayer : MonoBehaviour
 {
     public Transform mainCamera;
-    // public float lookDownAngle = 15.0f;
-    // public float lookUpAngle = 15.0f;
     public float lookAngleThreshold = 15.0f;
     public float speed = 2.0f;
     public bool moveForward;
 
     private CharacterController cc;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cc = GetComponent<CharacterController>();
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 将角度从 0~360 映射为 -180~180
@@ -39,7 +35,7 @@ public class VRPlayer : MonoBehaviour
         {
             Vector3 forward = mainCamera.forward;
             forward.Normalize();
-            // add a exceleration variable to make a lerp movement
+            // add a exceleration variable to make a lerp movement - comment from DES
             cc.Move(forward * speed * Time.deltaTime);
         }
     }
